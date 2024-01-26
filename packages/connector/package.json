@@ -1,0 +1,45 @@
+{
+  "name": "@meteor-web3/connector",
+  "version": "1.0.0",
+  "description": "",
+  "types": "dist/esm/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "files": [
+    "/dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meteor-web3/meteor.git",
+    "directory": "packages/connector"
+  },
+  "scripts": {
+    "test": "cd test && pnpm dev",
+    "build:esm": "tsc -p tsconfig.json",
+    "build:cjs": "tsc -p tsconfig-cjs.json",
+    "build": "pnpm build:esm && pnpm build:cjs",
+    "doc": "pnpm typedoc src/index.ts --out ../../docs/connector"
+  },
+  "dependencies": {
+    "@ethersproject/abstract-provider": "^5.7.0",
+    "@lit-protocol/crypto": "2.1.161",
+    "@meteor-web3/communicator": "^1.0.0",
+    "@meteor-web3/dapp-table-client": "^1.0.0",
+    "@meteor-web3/utils": "^1.0.1",
+    "bufferutil": "^4.0.7",
+    "ceramic-cacao": "^1.4.0",
+    "dids": "^5.0.2",
+    "encoding": "^0.1.13",
+    "ethers": "^5.7.2",
+    "eventemitter3": "^5.0.1",
+    "utf-8-validate": "^6.0.3"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "esdoc": "^1.1.0",
+    "esdoc-standard-plugin": "^1.0.0",
+    "typedoc": "^0.24.8"
+  }
+}

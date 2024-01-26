@@ -1,0 +1,29 @@
+{
+  "name": "@meteor-web3/communicator",
+  "version": "1.0.0",
+  "description": "",
+  "types": "dist/esm/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "files": [
+    "/dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meteor-web3/meteor-sdk.git",
+    "directory": "packages/communicator"
+  },
+  "scripts": {
+    "test": "cd test && pnpm dev",
+    "build:esm": "tsc -p tsconfig.json",
+    "build:cjs": "tsc -p tsconfig-cjs.json",
+    "build": "pnpm build:esm && pnpm build:cjs",
+    "doc": "pnpm typedoc src/index.ts --out ../../docs/communicator"
+  },
+  "dependencies": {
+    "nanoid": "4.0.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT"
+}

@@ -1,0 +1,35 @@
+{
+  "workspaces": [
+    "packages/*",
+    "demo"
+  ],
+  "scripts": {
+    "build": "npm run format && npm run lint:fix && lerna run build",
+    "build:utils": "lerna run build --scope=@meteor-web3/utils",
+    "build:communicator": "lerna run build --scope=@meteor-web3/communicator",
+    "build:connector": "lerna run build --scope=@meteor-web3/connector",
+    "doc": "lerna run doc",
+    "doc:utils": "lerna run doc --scope=@meteor-web3/utils",
+    "doc:communicator": "lerna run doc --scope=@meteor-web3/communicator",
+    "doc:connector": "lerna run doc --scope=@meteor-web3/connector",
+    "test": "pnpm --filter \"demo\" dev",
+    "publish": "lerna publish --no-private",
+    "format": "prettier --config .prettierrc . --write",
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix"
+  },
+  "dependencies": {
+    "lerna": "^7.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "@typescript-eslint/eslint-plugin": "^6.1.0",
+    "@typescript-eslint/parser": "^6.1.0",
+    "eslint": "^8.45.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.0.0",
+    "typedoc": "^0.25.3",
+    "typescript": "~5.1.6"
+  }
+}
