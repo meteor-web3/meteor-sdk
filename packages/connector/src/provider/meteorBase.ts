@@ -11,6 +11,7 @@ import {
 import { EthersProvider, IProvider } from "./types";
 
 export abstract class MeteorBaseProvider implements IProvider {
+  destroyed: boolean = false;
   _provider?: EthersProvider;
   isConnected?: boolean;
   wallet?: WALLET;
@@ -20,6 +21,8 @@ export abstract class MeteorBaseProvider implements IProvider {
   userInfo?: any;
 
   constructor() {}
+
+  abstract destroy(): void;
 
   on(event: string, listener: Function): this {
     if (!this._provider) {

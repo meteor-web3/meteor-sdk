@@ -57,6 +57,11 @@ export class WalletProvider extends EventEmitter<ConnecterEvents> {
     }
   }
 
+  destroy() {
+    window.meteorCommunicator?.destroy?.();
+    window.externalWallet = undefined;
+  }
+
   async connectWallet(params?: {
     wallet?: string;
     preferredAuthType?: string;
@@ -194,6 +199,13 @@ export class MeteorWalletProvider extends MeteorBaseProvider {
       this.communicator = window.meteorCommunicator;
     }
     this.communicator.onRequestMessage(() => {});
+  }
+
+  destroy(): void {
+    if (this.destroyed) return;
+    this.meteorProvider?.destroy?.();
+    window.externalWallet = undefined;
+    this.destroyed = true;
   }
 
   connectWallet = async (params?: {

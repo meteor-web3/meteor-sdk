@@ -13,20 +13,33 @@ export const defaultSnapOrigin =
 
 export class DataverseSnapProvider extends MeteorBaseProvider {
   private snapOrigin: string;
+  private snapConnected: boolean = false;
 
   constructor(snapOrigin: string = defaultSnapOrigin) {
     super();
     this.snapOrigin = snapOrigin;
   }
 
+  destroy() {}
+
   requestSnap = async ({ method, params }) => {
+    if (!this.snapConnected) {
+      console.log("connect snap: " + this.snapOrigin);
+      await window.ethereum.request({
+        method: "wallet_requestSnaps",
+        params: {
+          [this.snapOrigin]: {}
+        }
+      });
+      this.snapConnected = true;
+    }
     console.log("request", { method, params });
     const res = await (window as any).ethereum.request({
       method: "wallet_invokeSnap",
       params: {
         snapId: this.snapOrigin,
         request: {
-          method: `ETHEREUM_REQUEST_${method}`,
+          method,
           ...(params instanceof Object
             ? { params }
             : { params: { __PARAM__: params } })
@@ -47,14 +60,8 @@ export class DataverseSnapProvider extends MeteorBaseProvider {
     userInfo?: any;
   }> => {
     let res = await this.requestSnap({
-      method: "wallet_invokeSnap",
-      params: {
-        snapId: this.snapOrigin,
-        request: {
-          method: "connectWallet",
-          ...(params ? params : {})
-        }
-      }
+      method: "connectWallet",
+      params
     });
 
     if (res.error) {
@@ -133,16 +140,8 @@ export class DataverseSnapProvider extends MeteorBaseProvider {
     }
 
     const res = await this.requestSnap({
-      method: "wallet_invokeSnap",
-      params: {
-        snapId: this.snapOrigin,
-        request: {
-          method,
-          ...(params instanceof Object
-            ? { params }
-            : { params: { __PARAM__: params } })
-        }
-      }
+      method,
+      params
     });
 
     if (res.error) {

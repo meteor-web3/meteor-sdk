@@ -35,6 +35,12 @@ export class MeteorWebProvider extends MeteorBaseProvider {
     });
   }
 
+  destroy() {
+    if (this.destroyed) return;
+    this.communicator?.destroy?.();
+    this.destroyed = true;
+  }
+
   connectWallet = async (params?: {
     wallet?: WALLET | undefined;
     preferredAuthType?: AuthType;

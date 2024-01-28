@@ -10,7 +10,6 @@ import {
   Provider,
   AuthType
 } from "./types";
-import { IProvider } from "./provider";
 import { MeteorBaseProvider } from "./provider/meteorBase";
 import { Model } from "./types/app/types";
 
@@ -45,8 +44,13 @@ export class Connector {
     return this.provider.userInfo;
   }
 
-  getProvider(): IProvider {
+  getProvider(): MeteorBaseProvider {
     return this.provider;
+  }
+
+  setProvider(provider: MeteorBaseProvider) {
+    this.provider?.destroy?.();
+    this.provider = provider;
   }
 
   async connectWallet(params?: {
