@@ -157,7 +157,7 @@ did:pkh:eip155:1:0x29761660d6Cb26a08e9A9c7de12E0038eE9cb623
 
 <br>
 
-check all functions in [docs](https://docs.meteor-web3.com/wallet-apis/connectWallet).
+check all functions in [docs](https://docs.meteor.computer/wallet-apis/connectWallet).
 
 ## License
 
@@ -166,13 +166,11 @@ file for details.
 
 ## Documentation
 
-View [Docs](https://docs.meteor-web3.com/).  
+View [Docs](https://docs.meteor.computer/).  
 
 View [communicator API Doc](https://meteor-web3.github.io/meteor-sdk/communicator/index.html).  
 View [connector API Doc](https://meteor-web3.github.io/meteor-sdk/connector/index.html).  
 View [utils API Doc](https://meteor-web3.github.io/meteor-sdk/utils/index.html).  
-View [wallet-adapter API Doc](https://meteor-web3.github.io/meteor-sdk/wallet-adapter/index.html).  
-View [wallet-provider API Doc](https://meteor-web3.github.io/meteor-sdk/wallet-provider/index.html).
 
 ## Contributing
 
