@@ -7,7 +7,8 @@ import {
   AuthType
 } from "../types";
 import { MeteorBaseProvider } from "./meteorBase";
-import { IframeCommunicator } from "meteor-iframe";
+import { IframeCommunicator } from "@meteor-web3/communicator";
+// import { ethers } from "ethers";
 
 declare global {
   interface Window {

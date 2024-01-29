@@ -25,7 +25,7 @@
     "@ethersproject/abstract-signer": "^5.7.0",
     "@ethersproject/providers": "^5.7.0",
     "@lit-protocol/crypto": "2.1.161",
-    "@meteor-web3/communicator": "^1.0.0",
+    "@meteor-web3/communicator": "^1.0.1",
     "@meteor-web3/dapp-table-client": "^1.0.0",
     "@meteor-web3/utils": "^1.0.1",
     "bufferutil": "^4.0.7",
@@ -34,7 +34,6 @@
     "encoding": "^0.1.13",
     "ethers": "^5.7.2",
     "eventemitter3": "^5.0.1",
-    "meteor-iframe": "^0.0.2",
     "utf-8-validate": "^6.0.3"
   },
   "keywords": [],
