@@ -4,11 +4,11 @@ import {
   ReturnType,
   Chain,
   WALLET,
-  AuthType
+  Provider
 } from "../types";
 import { MeteorBaseProvider } from "./meteorBase";
 import { IframeCommunicator } from "@meteor-web3/communicator";
-// import { ethers } from "ethers";
+import { ethers } from "ethers";
 
 declare global {
   interface Window {
@@ -19,42 +19,50 @@ declare global {
 export class MeteorWebProvider extends MeteorBaseProvider {
   private communicator: IframeCommunicator;
 
-  constructor(iframeWindow: Window) {
+  constructor(
+    iframeWindow: Window,
+    ethereumProvider: ethers.providers.ExternalProvider
+  ) {
     super();
     this.communicator = new IframeCommunicator({
       source: window,
       target: iframeWindow,
-      runningEnv: "Client",
-      methodHandler: async (args) => {
-        // console.log("Client received method call:", args);
-        if (args.method === "ethereumRequest") {
-          const res = await window.ethereum.request(args.params);
-          // console.log("Client responded to ethereumRequest:", res);
-          return res;
-        }
-      }
+      runningEnv: "Client"
     });
+    this.setExternalProvider(ethereumProvider);
+  }
+
+  setExternalProvider(ethereumProvider: ethers.providers.ExternalProvider) {
+    this.communicator.methodHandler = async (args) => {
+      // console.log("Client received method call:", args);
+      if (args.method === "ethereumRequest") {
+        const res = await ethereumProvider.request(args.params);
+        // console.log("Client responded to ethereumRequest:", res);
+        return res;
+      }
+    };
   }
 
   destroy() {
     if (this.destroyed) return;
-    this.communicator?.destroy?.();
+    this.communicator.destroy();
     this.destroyed = true;
   }
 
   connectWallet = async (params?: {
-    wallet?: WALLET | undefined;
-    preferredAuthType?: AuthType;
+    provider?: Provider;
   }): Promise<{
     address: string;
     chain: Chain;
     wallet: WALLET;
     userInfo?: any;
   }> => {
+    if (params?.provider) {
+      this.setExternalProvider(params.provider);
+    }
     const res = (await this.communicator.sendRequest({
       postMessageTo: "Kernel",
-      method: "connectWallet",
-      params
+      method: "connectWallet"
     })) as {
       address: string;
       chain: {

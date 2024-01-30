@@ -43,6 +43,10 @@ export class Communicator {
     this.sourceOrigin.addEventListener(MESSAGE, this._onmessage.bind(this));
   }
 
+  get isDestroyed() {
+    return this.destroyed;
+  }
+
   async sendRequest(args: RequestInputs) {
     if (this.destroyed) return;
     return new Promise((resolve, reject) => {

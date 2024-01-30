@@ -188,7 +188,7 @@ export class MeteorWalletProvider extends MeteorBaseProvider {
       window.externalWallet = new ExternalWallet();
     }
     this.externalWallet = window.externalWallet;
-    if (!window.meteorCommunicator) {
+    if (!window.meteorCommunicator || window.meteorCommunicator.isDestroyed) {
       this.communicator = new Communicator({
         source: window,
         target: window.top,
@@ -203,7 +203,7 @@ export class MeteorWalletProvider extends MeteorBaseProvider {
 
   destroy(): void {
     if (this.destroyed) return;
-    this.meteorProvider?.destroy?.();
+    this.meteorProvider.destroy();
     window.externalWallet = undefined;
     this.destroyed = true;
   }

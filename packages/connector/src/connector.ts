@@ -48,9 +48,14 @@ export class Connector {
     return this.provider;
   }
 
+  /**
+   * Warning: this method will destroy the previous provider and set a new provider
+   */
   setProvider(provider: MeteorBaseProvider) {
-    this.provider?.destroy?.();
-    this.provider = provider;
+    if (this.provider !== provider) {
+      this.provider.destroy();
+      this.provider = provider;
+    }
   }
 
   async connectWallet(params?: {
