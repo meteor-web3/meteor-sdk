@@ -9,7 +9,7 @@ import {
   RequestInputs,
   ResponseArguments,
   RequestArguments,
-  PostMessageTo
+  RunningEnv
 } from "./types";
 import { generateNanoid } from "./utils";
 /**
@@ -19,7 +19,10 @@ export class Communicator {
   protected targetOrigin: Window;
   protected sourceOrigin: Window;
   protected methodClass: any;
-  protected postMessageTo: PostMessageTo;
+  public methodHandler?: (
+    args: RequestArguments & RequestInputs
+  ) => Promise<void> | void;
+  protected postMessageTo: RunningEnv;
   protected allowOrigins = "*";
   protected destroyed: boolean = false;
   protected sequenceId: string = generateNanoid();
@@ -27,19 +30,28 @@ export class Communicator {
   protected responseSequenceIds: Record<string, boolean> = {};
   private handleRequestMessage: Function;
   private handleResponseMessage: Function;
+  private runningEnv: RunningEnv;
 
   constructor({
     source,
     target,
-    methodClass
+    runningEnv = process.env.ENV as RunningEnv,
+    methodClass,
+    methodHandler
   }: {
     source: Window;
     target: Window;
+    runningEnv?: RunningEnv;
     methodClass?: any;
+    methodHandler?: (
+      args: RequestArguments & RequestInputs
+    ) => Promise<void> | void;
   }) {
     this.targetOrigin = target;
     this.sourceOrigin = source;
     this.methodClass = methodClass;
+    this.runningEnv = runningEnv;
+    this.methodHandler = methodHandler;
     this.sourceOrigin.addEventListener(MESSAGE, this._onmessage.bind(this));
   }
 
@@ -112,31 +124,39 @@ export class Communicator {
       }
 
       // if code running env is different from postMessageTo, it will return and do nothing
-      if (
+      /* if (
         args.postMessageTo === "Extension" ||
         (args.postMessageTo === "Browser" &&
           process.env.ENV &&
           process.env.ENV !== "Browser")
       ) {
         return;
+      } */
+      if (
+        args.postMessageTo === "Extension" ||
+        args.postMessageTo !== this.runningEnv
+      ) {
+        return;
       }
 
       let result: { code: string; result?: any; error?: string };
-      let isMethodClassHasMethod: boolean;
+      let isMethodClassHasMethod: boolean = false;
 
-      if (!this.methodClass) {
+      if (!this.methodHandler && !this.methodClass) {
         result = {
           code: UNKNOWN_CODE,
           error:
             "Please pass in the methodClass, in order to call methods in the class"
         };
       } else {
-        if (this.methodClass[args.method]) {
+        if (this.methodHandler || this.methodClass[args.method]) {
           isMethodClassHasMethod = true;
           try {
-            const res = await this.methodClass[args.method](args.params);
+            const res = this.methodHandler
+              ? await this.methodHandler(args)
+              : await this.methodClass[args.method](args.params);
             result = { code: CORRECT_CODE, result: res };
-          } catch (error) {
+          } catch (error: any) {
             console.log(error);
             result = {
               code: error?.code || UNKNOWN_CODE,

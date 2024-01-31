@@ -7,7 +7,7 @@ import {
   Provider
 } from "../types";
 import { MeteorBaseProvider } from "./meteorBase";
-import { IframeCommunicator } from "@meteor-web3/communicator";
+import { Communicator } from "@meteor-web3/communicator";
 import { ethers } from "ethers";
 
 declare global {
@@ -17,14 +17,14 @@ declare global {
 }
 
 export class MeteorWebProvider extends MeteorBaseProvider {
-  private communicator: IframeCommunicator;
+  private communicator: Communicator;
 
   constructor(
     iframeWindow: Window,
     ethereumProvider: ethers.providers.ExternalProvider
   ) {
     super();
-    this.communicator = new IframeCommunicator({
+    this.communicator = new Communicator({
       source: window,
       target: iframeWindow,
       runningEnv: "Client"

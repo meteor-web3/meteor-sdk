@@ -1,13 +1,13 @@
 export interface RequestInputs {
   method: string;
   params?: any;
-  postMessageTo: PostMessageTo;
+  postMessageTo: RunningEnv;
 }
 
 export interface RequestArguments {
   sequenceId: string;
   type: "request";
-  postMessageTo: PostMessageTo;
+  postMessageTo: RunningEnv;
 }
 
 export interface ResponseArguments {
@@ -16,7 +16,11 @@ export interface ResponseArguments {
   result: object;
 }
 
+/**
+ * @deprecated use RunningEnv instead
+ */
 export type PostMessageTo = "Extension" | "Browser";
+export type RunningEnv = PostMessageTo | "Client" | "Kernel";
 
 export type Any = Record<string, any>;
 
