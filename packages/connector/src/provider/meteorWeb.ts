@@ -6,7 +6,7 @@ import {
   WALLET,
   Provider
 } from "../types";
-import { MeteorBaseProvider } from "./meteorBase";
+import { BaseProvider } from "./base";
 import { Communicator } from "@meteor-web3/communicator";
 import { ethers } from "ethers";
 
@@ -16,7 +16,7 @@ declare global {
   }
 }
 
-export class MeteorWebProvider extends MeteorBaseProvider {
+export class MeteorWebProvider extends BaseProvider {
   private communicator: Communicator;
 
   constructor(

@@ -10,13 +10,13 @@ import {
   Provider,
   AuthType
 } from "./types";
-import { MeteorBaseProvider } from "./provider/meteorBase";
+import { BaseProvider } from "./provider/base";
 import { Model } from "./types/app/types";
 
 export class Connector {
-  provider: MeteorBaseProvider;
+  provider: BaseProvider;
 
-  constructor(provider: MeteorBaseProvider) {
+  constructor(provider: BaseProvider) {
     this.provider = provider;
   }
 
@@ -44,14 +44,14 @@ export class Connector {
     return this.provider.userInfo;
   }
 
-  getProvider(): MeteorBaseProvider {
+  getProvider(): BaseProvider {
     return this.provider;
   }
 
   /**
    * Warning: this method will destroy the previous provider and set a new provider
    */
-  setProvider(provider: MeteorBaseProvider) {
+  setProvider(provider: BaseProvider) {
     if (this.provider !== provider) {
       this.provider.destroy();
       this.provider = provider;

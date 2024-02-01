@@ -42,7 +42,7 @@ the demo will be running on http://localhost:5173/.
 <br/>
 <p align="center">
 <a href=" " target="_blank">
-<img src="https://s2.loli.net/2023/08/04/tlV31FdPOujJfrY.png" width="300" alt="Meteor logo">
+<img src="https://s2.loli.net/2024/01/26/KpoReCAIN9hPrtu.png" width="300" alt="Meteor logo">
 </a >
 </p >
 <br/>

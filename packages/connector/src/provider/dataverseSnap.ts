@@ -6,12 +6,12 @@ import {
   WALLET,
   AuthType
 } from "../types";
-import { MeteorBaseProvider } from "./meteorBase";
+import { BaseProvider } from "./base";
 
 export const defaultSnapOrigin =
   process.env.SNAP_ORIGIN ?? `local:http://localhost:8080`;
 
-export class DataverseSnapProvider extends MeteorBaseProvider {
+export class DataverseSnapProvider extends BaseProvider {
   private snapOrigin: string;
   private snapConnected: boolean = false;
 

@@ -10,7 +10,7 @@ import {
 } from "../types";
 import { EthersProvider, IProvider } from "./types";
 
-export abstract class MeteorBaseProvider implements IProvider {
+export abstract class BaseProvider implements IProvider {
   destroyed: boolean = false;
   _provider?: EthersProvider;
   isConnected?: boolean;

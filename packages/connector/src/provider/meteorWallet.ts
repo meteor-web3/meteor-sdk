@@ -15,7 +15,7 @@ import {
   Provider,
   AuthType
 } from "../types";
-import { MeteorBaseProvider } from "./meteorBase";
+import { BaseProvider } from "./base";
 import EventEmitter from "eventemitter3";
 import { ConnecterEvents } from "./types";
 import { ethers, Bytes, Contract } from "ethers";
@@ -176,7 +176,7 @@ export class WalletProvider extends EventEmitter<ConnecterEvents> {
   }
 }
 
-export class MeteorWalletProvider extends MeteorBaseProvider {
+export class MeteorWalletProvider extends BaseProvider {
   private communicator: Communicator;
   private meteorProvider?: WalletProvider;
   private externalProvider?: any;
