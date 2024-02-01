@@ -587,7 +587,7 @@ function App() {
   };
 
   const getDAppInfo = async () => {
-    const appInfo = await connector.getDAppInfo(appId);
+    const appInfo = await connector.getDAppInfo({ dappId: appId });
     console.log(appInfo);
     setAppInfo(`1 result show in console.`);
     return appInfo;

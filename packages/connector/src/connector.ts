@@ -100,8 +100,16 @@ export class Connector {
     return getDapps();
   }
 
-  getDAppInfo(dappId: string) {
-    return getDapp(dappId);
+  getDAppInfo({
+    dappId,
+    modelId,
+    hostname
+  }: {
+    dappId?: string;
+    modelId?: string;
+    hostname?: string;
+  }) {
+    return getDapp({ dappId, modelId, hostname });
   }
 
   getLatestStream(model: Model) {
