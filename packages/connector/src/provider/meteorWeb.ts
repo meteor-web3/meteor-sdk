@@ -21,7 +21,7 @@ export class MeteorWebProvider extends BaseProvider {
 
   constructor(
     iframeWindow: Window,
-    ethereumProvider: ethers.providers.ExternalProvider
+    ethereumProvider?: ethers.providers.ExternalProvider
   ) {
     super();
     this.communicator = new Communicator({
@@ -29,13 +29,16 @@ export class MeteorWebProvider extends BaseProvider {
       target: iframeWindow,
       runningEnv: "Client"
     });
-    this.setExternalProvider(ethereumProvider);
+    ethereumProvider && this.setExternalProvider(ethereumProvider);
   }
 
   setExternalProvider(ethereumProvider: ethers.providers.ExternalProvider) {
     this.communicator.methodHandler = async (args) => {
       // console.log("Client received method call:", args);
       if (args.method === "ethereumRequest") {
+        if (!ethereumProvider) {
+          throw new Error("No ethereum provider found");
+        }
         const res = await ethereumProvider.request(args.params);
         // console.log("Client responded to ethereumRequest:", res);
         return res;

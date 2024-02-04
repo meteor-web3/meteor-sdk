@@ -23,6 +23,9 @@ export class DataverseSnapProvider extends BaseProvider {
   destroy() {}
 
   requestSnap = async ({ method, params }) => {
+    if (!window.ethereum) {
+      throw "Snap-Provider must be used with MetaMask extension.";
+    }
     if (!this.snapConnected) {
       console.log("connect snap: " + this.snapOrigin);
       await window.ethereum.request({

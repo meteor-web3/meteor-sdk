@@ -223,15 +223,15 @@ export class MeteorWalletProvider extends BaseProvider {
     let preferredAuthType: AuthType;
     if (params) {
       wallet = params.wallet;
-      provider = params.provider || window.meteor;
+      provider = params.provider || window.meteor || { isMeteor: true };
       preferredAuthType = params.preferredAuthType;
     } else {
-      provider = window.meteor;
+      provider = window.meteor || { isMeteor: true };
     }
 
     if (provider.isMeteor) {
       if (!(await detectMeteorExtension())) {
-        throw "The plugin has not been loaded yet. Please check the plugin status or go to https://chrome.google.com/webstore/detail/meteor/kcigpjcafekokoclamfendmaapcljead to install plugins";
+        throw "The plugin has not been loaded yet. Please install or enable the plugin first.";
       }
       if (wallet === WALLET.EXTERNAL_WALLET) {
         throw "Conflict between wallet and provider";
