@@ -663,6 +663,13 @@ function App() {
     console.log(res);
   };
 
+  const getUserStorageSpace = async () => {
+    const res = await connector.runOS({
+      method: SYSTEM_CALL.getUserStorageSpace,
+    });
+    console.log(res);
+  };
+
   /*** Capability ***/
 
   /*** Encryption ***/
@@ -1114,6 +1121,7 @@ function App() {
       <button onClick={getAppSessionKey}>getAppSessionKey</button>
       <button onClick={getAppCacao}>getAppCacao</button>
       <button onClick={signWithSessionKey}>signWithSessionKey</button>
+      <button onClick={getUserStorageSpace}>getUserStorageSpace</button>
       <br />
       <button onClick={generateFileKey}>generateFileKey</button>
       <button onClick={encryptContent}>encryptContent</button>

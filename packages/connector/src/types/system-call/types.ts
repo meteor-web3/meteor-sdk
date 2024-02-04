@@ -34,6 +34,7 @@ export interface RequestType {
   getAppSessionKey: void;
   getAppCacao: void;
   signWithSessionKey: string | object;
+  getUserStorageSpace: void;
 
   generateFileKey: void;
   encryptContent: { content: object; keyHandler: string };
@@ -160,6 +161,7 @@ export interface ReturnType {
   getAppSessionKey: Promise<string>;
   getAppCacao: Promise<Cacao>;
   signWithSessionKey: Promise<{ jws: DagJWS; cacao: Cacao }>;
+  getUserStorageSpace: Promise<number>;
 
   generateFileKey: Promise<string>;
   encryptContent: Promise<object>;

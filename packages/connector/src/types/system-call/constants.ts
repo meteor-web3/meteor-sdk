@@ -10,6 +10,7 @@ export enum SYSTEM_CALL {
   getAppSessionKey = "getAppSessionKey",
   getAppCacao = "getAppCacao",
   signWithSessionKey = "signWithSessionKey",
+  getUserStorageSpace = "getUserStorageSpace",
 
   generateFileKey = "generateFileKey",
   encryptContent = "encryptContent",
