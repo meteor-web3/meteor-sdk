@@ -9,6 +9,7 @@ import {
 import { BaseProvider } from "./base";
 import { Communicator } from "@meteor-web3/communicator";
 import { ethers } from "ethers";
+import "@meteor-web3/meteor-iframe";
 
 declare global {
   interface Window {
@@ -20,13 +21,18 @@ export class MeteorWebProvider extends BaseProvider {
   private communicator: Communicator;
 
   constructor(
-    iframeWindow: Window,
     ethereumProvider?: ethers.providers.ExternalProvider
   ) {
+    const iframe = document.getElementById(
+      "meteor-iframe",
+    ) as HTMLIFrameElement;
+    if (!iframe || !(window as any).__METEOR_IFRAME_READY__) {
+      throw "Meteor Web wallet failed to load or has not been loaded yet.";
+    }
     super();
     this.communicator = new Communicator({
       source: window,
-      target: iframeWindow,
+      target: iframe.contentWindow,
       runningEnv: "Client"
     });
     ethereumProvider && this.setExternalProvider(ethereumProvider);

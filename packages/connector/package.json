@@ -1,6 +1,6 @@
 {
   "name": "@meteor-web3/connector",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "",
   "types": "dist/esm/index.d.ts",
   "main": "dist/cjs/index.js",
@@ -27,6 +27,7 @@
     "@lit-protocol/crypto": "2.1.161",
     "@meteor-web3/communicator": "^1.0.3",
     "@meteor-web3/dapp-table-client": "^1.0.1",
+    "@meteor-web3/meteor-iframe": "^0.0.8",
     "@meteor-web3/utils": "^1.0.1",
     "bufferutil": "^4.0.7",
     "ceramic-cacao": "^1.4.0",
