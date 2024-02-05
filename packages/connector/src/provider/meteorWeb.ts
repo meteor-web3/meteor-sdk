@@ -19,18 +19,18 @@ declare global {
 
 export class MeteorWebProvider extends BaseProvider {
   private communicator?: Communicator;
+  private ethereumProvider?: ethers.providers.ExternalProvider;
   private onInitializing: boolean = false;
 
   constructor(
     ethereumProvider?: ethers.providers.ExternalProvider
   ) {
     super();
-    this.init(ethereumProvider);
+    this.ethereumProvider = ethereumProvider;
+    this.init();
   }
 
-  async init(
-    ethereumProvider?: ethers.providers.ExternalProvider
-  ) {
+  async init() {
     if (this.onInitializing) {
       await new Promise<void>(resolve => {
         const timer = setInterval(() => {
@@ -48,7 +48,9 @@ export class MeteorWebProvider extends BaseProvider {
       if (document.readyState === 'complete') {
         resolve();
       } else {
-        document.addEventListener('load', () => resolve());
+        document.addEventListener('readystatechange', () =>
+          document.readyState === 'complete' && resolve()
+        );
       }
     });
     // document loaded
@@ -63,7 +65,12 @@ export class MeteorWebProvider extends BaseProvider {
       if ((window as any).__METEOR_IFRAME_READY__) {
         resolve();
       } else {
-        iframe.addEventListener('load', () => resolve());
+        const timer = setInterval(() => {
+          if ((window as any).__METEOR_IFRAME_READY__) {
+            clearTimeout(timer);
+            resolve();
+          }
+        }, 100);
       }
     });
     // iframe loaded
@@ -79,7 +86,7 @@ export class MeteorWebProvider extends BaseProvider {
       target: iframe.contentWindow,
       runningEnv: "Client"
     });
-    ethereumProvider && await this.setExternalProvider(ethereumProvider);
+    this.ethereumProvider && await this.setExternalProvider(this.ethereumProvider);
     this.onInitializing = false;
   }
 
