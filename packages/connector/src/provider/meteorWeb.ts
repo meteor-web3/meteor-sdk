@@ -18,27 +18,75 @@ declare global {
 }
 
 export class MeteorWebProvider extends BaseProvider {
-  private communicator: Communicator;
+  private communicator?: Communicator;
+  private onInitializing: boolean = false;
 
   constructor(
     ethereumProvider?: ethers.providers.ExternalProvider
   ) {
+    super();
+    this.init(ethereumProvider);
+  }
+
+  async init(
+    ethereumProvider?: ethers.providers.ExternalProvider
+  ) {
+    if (this.onInitializing) {
+      await new Promise<void>(resolve => {
+        const timer = setInterval(() => {
+          if (!this.onInitializing) {
+            clearTimeout(timer);
+            resolve();
+          }
+        }, 100);
+      })
+      return;
+    }
+    this.onInitializing = true;
+    // await document load
+    await new Promise<void>(resolve => {
+      if (document.readyState === 'complete') {
+        resolve();
+      } else {
+        document.addEventListener('load', () => resolve());
+      }
+    });
+    // document loaded
     const iframe = document.getElementById(
       "meteor-iframe",
     ) as HTMLIFrameElement;
-    if (!iframe || !(window as any).__METEOR_IFRAME_READY__) {
-      throw "Meteor Web wallet failed to load or has not been loaded yet.";
+    if (!iframe) {
+      throw "Meteor Web wallet failed to load.";
     }
-    super();
+    // await iframe load
+    await new Promise<void>(resolve => {
+      if ((window as any).__METEOR_IFRAME_READY__) {
+        resolve();
+      } else {
+        iframe.addEventListener('load', () => resolve());
+      }
+    });
+    // iframe loaded
+    if (!(window as any).__METEOR_IFRAME_READY__) {
+      throw "Meteor Web wallet failed to load.";
+    }
+    // prevent destruction before initialization ends
+    if (this.destroyed) {
+      return;
+    }
     this.communicator = new Communicator({
       source: window,
       target: iframe.contentWindow,
       runningEnv: "Client"
     });
-    ethereumProvider && this.setExternalProvider(ethereumProvider);
+    ethereumProvider && await this.setExternalProvider(ethereumProvider);
+    this.onInitializing = false;
   }
 
-  setExternalProvider(ethereumProvider: ethers.providers.ExternalProvider) {
+  async setExternalProvider(ethereumProvider: ethers.providers.ExternalProvider) {
+    if (!this.communicator) {
+      await this.init();
+    }
     this.communicator.methodHandler = async (args) => {
       // console.log("Client received method call:", args);
       if (args.method === "ethereumRequest") {
@@ -54,7 +102,7 @@ export class MeteorWebProvider extends BaseProvider {
 
   destroy() {
     if (this.destroyed) return;
-    this.communicator.destroy();
+    this.communicator?.destroy();
     this.destroyed = true;
   }
 
@@ -66,6 +114,9 @@ export class MeteorWebProvider extends BaseProvider {
     wallet: WALLET;
     userInfo?: any;
   }> => {
+    if (!this.communicator) {
+      await this.init();
+    }
     if (params?.provider) {
       this.setExternalProvider(params.provider);
     }
@@ -119,6 +170,9 @@ export class MeteorWebProvider extends BaseProvider {
     method: T;
     params?: RequestType[T];
   }): Promise<Awaited<ReturnType[T]>> => {
+    if (!this.communicator) {
+      await this.init();
+    }
     if (
       method !== SYSTEM_CALL.checkCapability &&
       method !== SYSTEM_CALL.loadFile &&
