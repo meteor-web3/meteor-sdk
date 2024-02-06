@@ -613,7 +613,7 @@ function App() {
 
   /*** Capability ***/
   const createCapability = async () => {
-    await connectWalletWithMetamaskProvider();
+    // await connectWalletWithMetamaskProvider();
     const res = await connector.runOS({
       method: SYSTEM_CALL.createCapability,
       params: {

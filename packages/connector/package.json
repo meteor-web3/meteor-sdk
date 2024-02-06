@@ -1,6 +1,6 @@
 {
   "name": "@meteor-web3/connector",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "",
   "types": "dist/esm/index.d.ts",
   "main": "dist/cjs/index.js",
@@ -30,8 +30,6 @@
     "@meteor-web3/meteor-iframe": "^0.0.8",
     "@meteor-web3/utils": "^1.0.1",
     "bufferutil": "^4.0.7",
-    "ceramic-cacao": "^1.4.0",
-    "dids": "^5.0.2",
     "encoding": "^0.1.13",
     "ethers": "^5.7.2",
     "eventemitter3": "^5.0.1",

@@ -1,5 +1,3 @@
-import { Cacao } from "ceramic-cacao";
-import { DagJWS } from "dids";
 import { StorageProvider } from "..";
 import { ValidAppCaps } from "../app";
 import {
@@ -156,11 +154,11 @@ export interface ReturnType {
   getValidAppCaps: Promise<ValidAppCaps>;
   getModelBaseInfo: Promise<any>;
 
-  createCapability: Promise<{ pkh: string; cacao: Cacao }>;
+  createCapability: Promise<{ pkh: string; cacao: object }>;
   checkCapability: Promise<boolean>;
   getAppSessionKey: Promise<string>;
-  getAppCacao: Promise<Cacao>;
-  signWithSessionKey: Promise<{ jws: DagJWS; cacao: Cacao }>;
+  getAppCacao: Promise<object>;
+  signWithSessionKey: Promise<{ jws: object; cacao: object }>;
   getUserStorageSpace: Promise<number>;
 
   generateFileKey: Promise<string>;
