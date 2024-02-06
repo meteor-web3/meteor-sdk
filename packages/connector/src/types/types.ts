@@ -3,7 +3,7 @@ import { StorageProviderName } from "./constants";
 
 export interface StorageProvider {
   name: StorageProviderName;
-  apiKey: string;
+  apiKey?: string;
 }
 
 export type Provider = Window["meteor"] | WalletProvider | any;
