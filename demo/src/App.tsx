@@ -29,8 +29,8 @@ const postModelId =
 const postVersion = "0.0.1";
 
 const storageProvider = {
-  name: StorageProviderName.Lighthouse,
-  apiKey: "9d632fe6.e756cc9797c345dc85595a688017b226" // input your api key to call createBareFile successfully
+  name: StorageProviderName.Dataverse,
+  // apiKey: "9d632fe6.e756cc9797c345dc85595a688017b226" // input your api key to call createBareFile successfully
 };
 
 let address: string;
@@ -665,7 +665,7 @@ function App() {
 
   const getUserStorageSpace = async () => {
     const res = await connector.runOS({
-      method: SYSTEM_CALL.getUserStorageSpace,
+      method: SYSTEM_CALL.getUserStorageSpace
     });
     console.log(res);
   };

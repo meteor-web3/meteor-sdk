@@ -1,5 +1,5 @@
 export * from "./types";
 export * from "./base";
 export * from "./meteorWallet";
-export * from "./dataverseSnap";
+export * from "./meteorSnap";
 export * from "./meteorWeb";

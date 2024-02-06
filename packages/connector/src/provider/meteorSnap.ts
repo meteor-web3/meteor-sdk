@@ -11,7 +11,7 @@ import { BaseProvider } from "./base";
 export const defaultSnapOrigin =
   process.env.SNAP_ORIGIN ?? `local:http://localhost:8080`;
 
-export class DataverseSnapProvider extends BaseProvider {
+export class MeteorSnapProvider extends BaseProvider {
   private snapOrigin: string;
   private snapConnected: boolean = false;
 
