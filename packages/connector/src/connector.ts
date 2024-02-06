@@ -14,34 +14,34 @@ import { BaseProvider } from "./provider/base";
 import { Model } from "./types/app/types";
 
 export class Connector {
-  provider: BaseProvider;
+  protected provider?: BaseProvider;
 
-  constructor(provider: BaseProvider) {
+  constructor(provider?: BaseProvider) {
     this.provider = provider;
   }
 
   get isConnected() {
-    return this.provider.isConnected;
+    return this.provider?.isConnected;
   }
 
   get wallet() {
-    return this.provider.wallet;
+    return this.provider?.wallet;
   }
 
   get address() {
-    return this.provider.address;
+    return this.provider?.address;
   }
 
   get chain() {
-    return this.provider.chain;
+    return this.provider?.chain;
   }
 
   get appId() {
-    return this.provider.appId;
+    return this.provider?.appId;
   }
 
   get userInfo() {
-    return this.provider.userInfo;
+    return this.provider?.userInfo;
   }
 
   getProvider(): BaseProvider {
@@ -53,9 +53,13 @@ export class Connector {
    */
   setProvider(provider: BaseProvider) {
     if (this.provider !== provider) {
-      this.provider.destroy();
+      this.provider?.destroy();
       this.provider = provider;
     }
+  }
+  
+  destroy() { 
+    this.provider?.destroy();
   }
 
   async connectWallet(params?: {
@@ -68,6 +72,9 @@ export class Connector {
     wallet: WALLET;
     userInfo?: any;
   }> {
+    if (!this.provider) {
+      throw "Base Provider is not set. Please set the provider before calling this method."
+    }
     return this.provider.connectWallet(params);
   }
 
@@ -79,10 +86,16 @@ export class Connector {
       }
     | undefined
   > {
+    if (!this.provider) {
+      throw "Base Provider is not set. Please set the provider before calling this method."
+    }
     return this.provider.getCurrentWallet();
   }
 
   getCurrentPkh(): string {
+    if (!this.provider) {
+      throw "Base Provider is not set. Please set the provider before calling this method."
+    }
     return this.provider.getCurrentPkh();
   }
 
@@ -93,6 +106,9 @@ export class Connector {
     method: T;
     params?: RequestType[T];
   }): Promise<Awaited<ReturnType[T]>> {
+    if (!this.provider) {
+      throw "Base Provider is not set. Please set the provider before calling this method."
+    }
     return this.provider.runOS({ method, params });
   }
 
