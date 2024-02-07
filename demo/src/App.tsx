@@ -29,7 +29,7 @@ const postModelId =
 const postVersion = "0.0.1";
 
 const storageProvider = {
-  name: StorageProviderName.Dataverse,
+  name: StorageProviderName.Dataverse
   // apiKey: "9d632fe6.e756cc9797c345dc85595a688017b226" // input your api key to call createBareFile successfully
 };
 

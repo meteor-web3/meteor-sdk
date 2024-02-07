@@ -57,8 +57,8 @@ export class Connector {
       this.provider = provider;
     }
   }
-  
-  destroy() { 
+
+  destroy() {
     this.provider?.destroy();
   }
 
@@ -73,7 +73,7 @@ export class Connector {
     userInfo?: any;
   }> {
     if (!this.provider) {
-      throw "Base Provider is not set. Please set the provider before calling this method."
+      throw "Base Provider is not set. Please set the provider before calling this method.";
     }
     return this.provider.connectWallet(params);
   }
@@ -87,14 +87,14 @@ export class Connector {
     | undefined
   > {
     if (!this.provider) {
-      throw "Base Provider is not set. Please set the provider before calling this method."
+      throw "Base Provider is not set. Please set the provider before calling this method.";
     }
     return this.provider.getCurrentWallet();
   }
 
   getCurrentPkh(): string {
     if (!this.provider) {
-      throw "Base Provider is not set. Please set the provider before calling this method."
+      throw "Base Provider is not set. Please set the provider before calling this method.";
     }
     return this.provider.getCurrentPkh();
   }
@@ -107,7 +107,7 @@ export class Connector {
     params?: RequestType[T];
   }): Promise<Awaited<ReturnType[T]>> {
     if (!this.provider) {
-      throw "Base Provider is not set. Please set the provider before calling this method."
+      throw "Base Provider is not set. Please set the provider before calling this method.";
     }
     return this.provider.runOS({ method, params });
   }

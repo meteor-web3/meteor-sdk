@@ -22,9 +22,7 @@ export class MeteorWebProvider extends BaseProvider {
   private ethereumProvider?: ethers.providers.ExternalProvider;
   private onInitializing: boolean = false;
 
-  constructor(
-    ethereumProvider?: ethers.providers.ExternalProvider
-  ) {
+  constructor(ethereumProvider?: ethers.providers.ExternalProvider) {
     super();
     this.ethereumProvider = ethereumProvider;
     this.init();
@@ -32,36 +30,37 @@ export class MeteorWebProvider extends BaseProvider {
 
   async init() {
     if (this.onInitializing) {
-      await new Promise<void>(resolve => {
+      await new Promise<void>((resolve) => {
         const timer = setInterval(() => {
           if (!this.onInitializing) {
             clearTimeout(timer);
             resolve();
           }
         }, 100);
-      })
+      });
       return;
     }
     this.onInitializing = true;
     // await document load
-    await new Promise<void>(resolve => {
-      if (document.readyState === 'complete') {
+    await new Promise<void>((resolve) => {
+      if (document.readyState === "complete") {
         resolve();
       } else {
-        document.addEventListener('readystatechange', () =>
-          document.readyState === 'complete' && resolve()
+        document.addEventListener(
+          "readystatechange",
+          () => document.readyState === "complete" && resolve()
         );
       }
     });
     // document loaded
     const iframe = document.getElementById(
-      "meteor-iframe",
+      "meteor-iframe"
     ) as HTMLIFrameElement;
     if (!iframe) {
       throw "Meteor Web wallet failed to load.";
     }
     // await iframe load
-    await new Promise<void>(resolve => {
+    await new Promise<void>((resolve) => {
       if ((window as any).__METEOR_IFRAME_READY__) {
         resolve();
       } else {
@@ -86,11 +85,14 @@ export class MeteorWebProvider extends BaseProvider {
       target: iframe.contentWindow,
       runningEnv: "Client"
     });
-    this.ethereumProvider && await this.setExternalProvider(this.ethereumProvider);
+    this.ethereumProvider &&
+      (await this.setExternalProvider(this.ethereumProvider));
     this.onInitializing = false;
   }
 
-  async setExternalProvider(ethereumProvider: ethers.providers.ExternalProvider) {
+  async setExternalProvider(
+    ethereumProvider: ethers.providers.ExternalProvider
+  ) {
     if (!this.communicator) {
       await this.init();
     }
