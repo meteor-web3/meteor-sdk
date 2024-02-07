@@ -192,7 +192,8 @@ export class MeteorWalletProvider extends BaseProvider {
       this.communicator = new Communicator({
         source: window,
         target: window.top,
-        methodClass: this.externalWallet
+        methodClass: this.externalWallet,
+        runningEnv: "Browser"
       });
       window.meteorCommunicator = this.communicator;
     } else {
