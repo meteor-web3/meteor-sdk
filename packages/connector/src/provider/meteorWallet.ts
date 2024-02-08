@@ -52,7 +52,8 @@ export class WalletProvider extends EventEmitter<ConnecterEvents> {
       window.meteorCommunicator = new Communicator({
         source: window,
         target: window.top,
-        methodClass: window.externalWallet
+        methodClass: window.externalWallet,
+        runningEnv: "Browser"
       });
     }
   }
