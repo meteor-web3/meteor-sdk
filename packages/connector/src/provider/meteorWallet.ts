@@ -48,7 +48,7 @@ export class WalletProvider extends EventEmitter<ConnecterEvents> {
     }
     window.externalWallet.setProvider(window.meteorExternalProvider);
 
-    if (!window.meteorCommunicator) {
+    if (!window.meteorCommunicator || window.meteorCommunicator.isDestroyed) {
       window.meteorCommunicator = new Communicator({
         source: window,
         target: window.top,
