@@ -1,7 +1,7 @@
 import { CALLBACK } from "./constants";
 import { Message } from "./types";
 
-export class CommunicatorFromBackgroundToBackground {
+export class CommunicatorB2B {
   constructor() {}
 
   async sendMessage(message: Message) {

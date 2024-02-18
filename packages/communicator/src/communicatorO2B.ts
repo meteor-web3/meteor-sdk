@@ -14,7 +14,7 @@ interface Chrome {
 
 declare let chrome: Chrome;
 
-export class CommunicatorWithChromeMessage {
+export class CommunicatorO2B {
   protected methodClass: any;
   protected destroyed: boolean = false;
   protected sequenceId: string = generateNanoid();

@@ -13,7 +13,7 @@ interface Chrome {
 
 declare let chrome: Chrome;
 
-export class CommunicatorFromBackgroundToOthers {
+export class CommunicatorB2O {
   constructor() {}
 
   async sendMessageToCurrentTab({

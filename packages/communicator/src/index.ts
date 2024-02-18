@@ -1,7 +1,7 @@
 export { Communicator } from "./communicator";
-export { CommunicatorWithChromeMessage } from "./communicatorWithChromeMessage";
-export { CommunicatorFromBackgroundToOthers } from "./communicatorFromBackgroundToOthers";
-export { CommunicatorFromBackgroundToBackground } from "./communicatorFromBackgroundToBackground";
+export { CommunicatorO2B } from "./communicatorO2B";
+export { CommunicatorB2O } from "./communicatorB2O";
+export { CommunicatorB2B } from "./communicatorB2B";
 export type {
   PostMessageTo,
   RunningEnv,
