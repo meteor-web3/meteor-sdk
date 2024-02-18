@@ -179,31 +179,17 @@ export class MeteorWebProvider extends BaseProvider {
     method: T;
     params?: RequestType[T];
   }): Promise<Awaited<ReturnType[T]>> => {
-    if (!this.communicator) {
-      await this.init();
-    }
-    if (
-      method !== SYSTEM_CALL.checkCapability &&
-      method !== SYSTEM_CALL.loadFile &&
-      method !== SYSTEM_CALL.loadFilesBy &&
-      (method !== SYSTEM_CALL.loadFilesBy ||
-        (method === SYSTEM_CALL.loadFilesBy &&
-          (params as RequestType[SYSTEM_CALL.loadFilesBy]).fileIds)) &&
-      !this?.isConnected
-    ) {
-      throw new Error("Please connect wallet first");
-    }
-
-    const res = await this.communicator.sendRequest({
-      postMessageTo: "Kernel",
+    return this.runOSCommon({
       method,
-      params
+      params,
+      request: async () => {
+        const res = await this.communicator.sendRequest({
+          postMessageTo: "Kernel",
+          method,
+          params
+        });
+        return res;
+      }
     });
-
-    if (method === SYSTEM_CALL.createCapability) {
-      this.appId = (params as RequestType[SYSTEM_CALL.createCapability]).appId;
-    }
-
-    return res as ReturnType[SYSTEM_CALL];
   };
 }

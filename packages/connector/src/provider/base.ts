@@ -75,11 +75,43 @@ export abstract class BaseProvider implements IProvider {
 
   abstract runOS: <T extends SYSTEM_CALL>({
     method,
-    params
+    params,
+    request
   }: {
     method: T;
     params?: RequestType[T];
+    request?: Function;
   }) => Promise<Awaited<ReturnType[T]>>;
+
+  async runOSCommon<T extends SYSTEM_CALL>({
+    method,
+    params,
+    request
+  }: {
+    method: T;
+    params?: RequestType[T];
+    request: () => Promise<any>;
+  }): Promise<Awaited<ReturnType[T]>> {
+    if (
+      method !== SYSTEM_CALL.checkCapability &&
+      method !== SYSTEM_CALL.loadFile &&
+      method !== SYSTEM_CALL.loadFilesBy &&
+      (method !== SYSTEM_CALL.loadFilesBy ||
+        (method === SYSTEM_CALL.loadFilesBy &&
+          (params as RequestType[SYSTEM_CALL.loadFilesBy]).fileIds)) &&
+      !this?.isConnected
+    ) {
+      throw new Error("Please connect wallet first");
+    }
+
+    const res = await request();
+
+    if (method === SYSTEM_CALL.createCapability) {
+      this.appId = (params as RequestType[SYSTEM_CALL.createCapability]).appId;
+    }
+
+    return res as ReturnType[SYSTEM_CALL];
+  }
 
   getCurrentPkh(): string {
     if (!this.address) {

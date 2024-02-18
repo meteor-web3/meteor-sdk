@@ -348,28 +348,17 @@ export class MeteorWalletProvider extends BaseProvider {
     method: T;
     params?: RequestType[T];
   }): Promise<Awaited<ReturnType[T]>> => {
-    if (
-      method !== SYSTEM_CALL.checkCapability &&
-      method !== SYSTEM_CALL.loadFile &&
-      method !== SYSTEM_CALL.loadFilesBy &&
-      (method !== SYSTEM_CALL.loadFilesBy ||
-        (method === SYSTEM_CALL.loadFilesBy &&
-          (params as RequestType[SYSTEM_CALL.loadFilesBy]).fileIds)) &&
-      !this?.isConnected
-    ) {
-      throw new Error("Please connect wallet first");
-    }
-
-    const res = (await this.communicator.sendRequest({
+    return this.runOSCommon({
       method,
       params,
-      postMessageTo: "Extension"
-    })) as ReturnType[SYSTEM_CALL];
-
-    if (method === SYSTEM_CALL.createCapability) {
-      this.appId = (params as RequestType[SYSTEM_CALL.createCapability]).appId;
-    }
-
-    return res;
+      request: async () => {
+        const res = await this.communicator.sendRequest({
+          method,
+          params,
+          postMessageTo: "Extension"
+        });
+        return res;
+      }
+    });
   };
 }
