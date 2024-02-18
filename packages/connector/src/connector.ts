@@ -1,5 +1,7 @@
 import { getDapp, getDapps } from "@meteor-web3/dapp-table-client";
 import { Dapp } from "@meteor-web3/dapp-table-client/dist/esm/__generated__/types";
+import { IPFS, baseURL } from "@meteor-web3/utils";
+import axios from "axios";
 
 import {
   RequestType,
@@ -110,6 +112,21 @@ export class Connector {
       throw "Base Provider is not set. Please set the provider before calling this method.";
     }
     return this.provider.runOS({ method, params });
+  }
+
+  async getUserStorageSpaceSize() {
+    const ipfs = new IPFS();
+    const requestPath = "/v0/block_sum";
+    const codeRes = await axios.post(`${baseURL}/v0/code`);
+    const sigObj = await this.runOS({
+      method: SYSTEM_CALL.signWithSessionKey,
+      params: {
+        code: codeRes.data.code,
+        requestPath
+      }
+    });
+    const res = await ipfs.getUserStorageSpaceSize(sigObj);
+    return res;
   }
 
   getDAppTable() {

@@ -1,6 +1,6 @@
 {
   "name": "@meteor-web3/utils",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "types": "dist/esm/index.d.ts",
   "main": "dist/cjs/index.js",

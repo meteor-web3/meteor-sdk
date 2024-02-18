@@ -56,22 +56,6 @@ export interface RequestType {
     syncImmediately?: boolean;
   };
 
-  monetizeFolder: {
-    folderId: string;
-    monetizationProvider: MonetizationProvider;
-  };
-  updateDataUnionBaseInfo: {
-    dataUnionId: string;
-    dataUnionName: string;
-    dataUnionDescription?: string;
-    syncImmediately?: boolean;
-  };
-  loadDataUnionById: string;
-  deleteDataUnion: {
-    dataUnionId: string;
-    syncImmediately?: boolean;
-  };
-
   createIndexFile: {
     modelId: string;
     fileName?: string;
@@ -136,12 +120,15 @@ export interface RequestType {
   };
   loadBareFileContent: string;
   loadActionFilesByFileId: string;
-  loadActionFilesByDataUnionId: string;
 
   monetizeFile: {
     fileId: string;
     monetizationProvider: MonetizationProvider;
     encryptionProvider?: EncryptionProvider;
+  };
+  monetizeFolder: {
+    folderId: string;
+    monetizationProvider: MonetizationProvider;
   };
   unlockFile: string;
   isFileUnlocked: string;
@@ -158,8 +145,11 @@ export interface ReturnType {
   checkCapability: Promise<boolean>;
   getAppSessionKey: Promise<string>;
   getAppCacao: Promise<object>;
-  signWithSessionKey: Promise<{ jws: object; cacao: object }>;
-  getUserStorageSpace: Promise<number>;
+  signWithSessionKey: Promise<{
+    jws: object;
+    cacao: object;
+    siweMessage: object;
+  }>;
 
   generateFileKey: Promise<string>;
   encryptContent: Promise<object>;
@@ -177,22 +167,6 @@ export interface ReturnType {
   deleteFolder: Promise<{
     currentFolder: StructuredFolder;
     allFolders: StructuredFolderRecord;
-  }>;
-
-  monetizeFolder: Promise<{
-    newDataUnion: StructuredFolder;
-    allDataUnions: StructuredFolderRecord;
-  }>;
-  updateDataUnionBaseInfo: Promise<{
-    currentDataUnion: StructuredFolder;
-    allDataUnions: StructuredFolderRecord;
-  }>;
-  loadCreatedDataUnions: Promise<StructuredFolderRecord>;
-  loadCollectedDataUnions: Promise<StructuredFolderRecord>;
-  loadDataUnionById: Promise<StructuredFolder>;
-  deleteDataUnion: Promise<{
-    currentDataUnion: StructuredFolder;
-    allDataUnions: StructuredFolderRecord;
   }>;
 
   createIndexFile: Promise<{
@@ -268,7 +242,6 @@ export interface ReturnType {
   >;
   loadBareFileContent: Promise<string>;
   loadActionFilesByFileId: Promise<MirrorFileRecord>;
-  loadActionFilesByDataUnionId: Promise<MirrorFileRecord>;
   loadCreatedDatatokenFiles: Promise<MirrorFileRecord>;
   loadCollectedDatatokenFiles: Promise<MirrorFileRecord>;
 
@@ -277,6 +250,10 @@ export interface ReturnType {
       file: Omit<MirrorFile, "content" | "external">;
       content?: FileContent;
     };
+  }>;
+  monetizeFolder: Promise<{
+    newDataUnion: StructuredFolder;
+    allDataUnions: StructuredFolderRecord;
   }>;
   unlockFile: Promise<{
     fileContent: {

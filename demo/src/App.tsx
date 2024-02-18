@@ -43,8 +43,6 @@ let encryptedContent: Record<string, any>;
 let folders: StructuredFolderRecord;
 let folderId: string;
 
-let dataUnionId: string;
-
 let indexFileId: string;
 let actionFileId: string;
 
@@ -63,13 +61,6 @@ function App() {
   const [isCurrentPkhValid, setIsCurrentPkhValid] = useState<boolean>();
   const [appListInfo, setAppListInfo] = useState<string>("");
   const [appInfo, setAppInfo] = useState<string>("");
-
-  // const [folders, setFolders] = useState<StructuredFolderRecord>();
-  // const [folderId, setFolderId] = useState("");
-  // const [dataUnions, setDataUnions] = useState<StructuredFolderRecord>();
-  // const [dataUnionId, setDataUnionId] = useState("");
-  // const [indexFileId, setIndexFileId] = useState("");
-  // const [actionFileId, setActionFileId] = useState("");
 
   const [meteorWalletSDKHasAddedListener, setMeteorWalletSDKHasAddedListener] =
     useState<boolean>();
@@ -261,31 +252,6 @@ function App() {
       it("removeFiles", removeFiles);
     });
   };
-
-  // const defineUnionTests = () => {
-  //   return describe("Union", function () {
-  //     // set no timeout
-  //     this.timeout(0);
-
-  //     before(async () => {
-  //       if (!isInit) {
-  //         await init();
-  //       }
-  //     });
-
-  //     it("publishDataUnion", publishDataUnion);
-
-  //     it("updateDataUnionBaseInfo", updateDataUnionBaseInfo);
-
-  //     it("loadCreatedDataUnions", loadCreatedDataUnions);
-
-  //     it("loadCollectedDataUnions", loadCollectedDataUnions);
-
-  //     it("loadDataUnionById", loadDataUnionById);
-
-  //     it("deleteDataUnion", deleteDataUnion);
-  //   });
-  // };
 
   /*** Wallet ***/
   const connectWalletWithMeteorWalletSDK = async (_wallet = wallet) => {
@@ -613,7 +579,7 @@ function App() {
 
   /*** Capability ***/
   const createCapability = async () => {
-    // await connectWalletWithMetamaskProvider();
+    await connectWalletWithMetamaskProvider();
     const res = await connector.runOS({
       method: SYSTEM_CALL.createCapability,
       params: {
@@ -663,10 +629,8 @@ function App() {
     console.log(res);
   };
 
-  const getUserStorageSpace = async () => {
-    const res = await connector.runOS({
-      method: SYSTEM_CALL.getUserStorageSpace
-    });
+  const getUserStorageSpaceSize = async () => {
+    const res = await connector.getUserStorageSpaceSize();
     console.log(res);
   };
 
@@ -870,14 +834,6 @@ function App() {
     const fileRecord = await connector.runOS({
       method: SYSTEM_CALL.loadActionFilesByFileId,
       params: indexFileId
-    });
-    console.log(fileRecord);
-  };
-
-  const loadActionFilesByDataUnionId = async () => {
-    const fileRecord = await connector.runOS({
-      method: SYSTEM_CALL.loadActionFilesByDataUnionId,
-      params: dataUnionId
     });
     console.log(fileRecord);
   };
@@ -1121,7 +1077,7 @@ function App() {
       <button onClick={getAppSessionKey}>getAppSessionKey</button>
       <button onClick={getAppCacao}>getAppCacao</button>
       <button onClick={signWithSessionKey}>signWithSessionKey</button>
-      <button onClick={getUserStorageSpace}>getUserStorageSpace</button>
+      <button onClick={getUserStorageSpaceSize}>getUserStorageSpaceSize</button>
       <br />
       <button onClick={generateFileKey}>generateFileKey</button>
       <button onClick={encryptContent}>encryptContent</button>
@@ -1142,9 +1098,6 @@ function App() {
       <button onClick={createActionFile}>createActionFile</button>
       <button onClick={updateActionFile}>updateActionFile</button>
       <button onClick={loadActionFilesByFileId}>loadActionFilesByFileId</button>
-      <button onClick={loadActionFilesByDataUnionId}>
-        loadActionFilesByDataUnionId
-      </button>
       <button>
         <span>createBareFile</span>
         <input

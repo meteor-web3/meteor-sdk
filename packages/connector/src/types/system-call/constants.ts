@@ -10,7 +10,6 @@ export enum SYSTEM_CALL {
   getAppSessionKey = "getAppSessionKey",
   getAppCacao = "getAppCacao",
   signWithSessionKey = "signWithSessionKey",
-  getUserStorageSpace = "getUserStorageSpace",
 
   generateFileKey = "generateFileKey",
   encryptContent = "encryptContent",
@@ -20,11 +19,6 @@ export enum SYSTEM_CALL {
   loadFolderTrees = "loadFolderTrees",
   loadFoldersBy = "loadFoldersBy",
   deleteFolder = "deleteFolder",
-
-  monetizeFolder = "monetizeFolder",
-  updateDataUnionBaseInfo = "updateDataUnionBaseInfo",
-  loadDataUnionById = "loadDataUnionById",
-  deleteDataUnion = "deleteDataUnion",
 
   createIndexFile = "createIndexFile",
   updateIndexFile = "updateIndexFile",
@@ -39,9 +33,9 @@ export enum SYSTEM_CALL {
   loadFilesBy = "loadFilesBy",
   loadBareFileContent = "loadBareFileContent",
   loadActionFilesByFileId = "loadActionFilesByFileId",
-  loadActionFilesByDataUnionId = "loadActionFilesByDataUnionId",
 
   monetizeFile = "monetizeFile",
+  monetizeFolder = "monetizeFolder",
   unlockFile = "unlockFile",
   isFileUnlocked = "isFileUnlocked"
 }
