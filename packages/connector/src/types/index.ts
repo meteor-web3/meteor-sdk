@@ -1,18 +1,12 @@
 export {
-  Extension,
-  Browser,
-  StorageProviderName,
-  SignMethod
-} from "./constants";
-export type { StorageProvider, Provider } from "./types";
-export { RESOURCE, WALLET, type Chain, type AuthType } from "./wallet";
-export {
-  Apps,
-  ModelName,
-  type Models,
-  type DAppInfo,
-  type DAppTable
-} from "./app";
+  RESOURCE,
+  WALLET,
+  SignMethod,
+  type Chain,
+  type AuthType,
+  type Provider
+} from "./wallet";
+export { ModelName, type Models, type DAppInfo, type DAppTable } from "./app";
 export {
   EncryptionProtocol,
   DecryptionConditionsType,
@@ -33,6 +27,7 @@ export {
   FolderType,
   StorageResource,
   SignalType,
+  StorageProviderName,
   type Action,
   type IndexFile,
   type ActionFileInfo,

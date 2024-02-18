@@ -35,4 +35,4 @@ export type {
   MirrorFileRecord
 } from "./mirror";
 
-export type { FileContent, FileRecord } from "./common";
+export type { FileContent, FileRecord, StorageProvider } from "./common";

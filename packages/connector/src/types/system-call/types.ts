@@ -1,4 +1,3 @@
-import { StorageProvider } from "..";
 import { ValidAppCaps } from "../app";
 import {
   Action,
@@ -8,7 +7,8 @@ import {
   StructuredFolder,
   StructuredFolderRecord,
   Signal,
-  FolderType
+  FolderType,
+  StorageProvider
 } from "../fs";
 import { SYSTEM_CALL } from "./constants";
 import { RESOURCE } from "../wallet";

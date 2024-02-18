@@ -9,3 +9,8 @@ export enum WALLET {
 export enum RESOURCE {
   CERAMIC = "CERAMIC"
 }
+
+export enum SignMethod {
+  signMessage = "signMessage",
+  _signTypedData = "_signTypedData"
+}

@@ -11,7 +11,6 @@ import {
   ReturnType,
   Chain,
   WALLET,
-  Extension,
   Provider,
   AuthType
 } from "../types";
@@ -364,7 +363,7 @@ export class MeteorWalletProvider extends BaseProvider {
     const res = (await this.communicator.sendRequest({
       method,
       params,
-      postMessageTo: Extension
+      postMessageTo: "Extension"
     })) as ReturnType[SYSTEM_CALL];
 
     if (method === SYSTEM_CALL.createCapability) {

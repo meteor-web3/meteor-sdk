@@ -1,3 +1,2 @@
-export type { PROVIDER, Chain, PkhObject, AuthType } from "./types";
-export { WALLET } from "./constants";
-export { RESOURCE } from "./constants";
+export type { PROVIDER, Chain, PkhObject, AuthType, Provider } from "./types";
+export { WALLET, RESOURCE, SignMethod } from "./constants";

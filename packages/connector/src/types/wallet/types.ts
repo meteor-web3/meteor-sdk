@@ -1,5 +1,6 @@
 import { ethers } from "ethers";
 import { WALLET } from ".";
+import { WalletProvider } from "../../provider/meteorWallet";
 
 export type PROVIDER =
   | ethers.providers.Web3Provider
@@ -33,3 +34,5 @@ export declare const AuthTypes: readonly [
 ];
 declare type AuthTypeTuple = typeof AuthTypes;
 export declare type AuthType = AuthTypeTuple[number];
+
+export type Provider = Window["meteor"] | WalletProvider | any;

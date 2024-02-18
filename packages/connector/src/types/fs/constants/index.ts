@@ -18,7 +18,6 @@ export enum SignalType {
 
 export enum StorageResource {
   CERAMIC = "CERAMIC",
-  WEAVEDB = "WEAVEDB",
   IPFS = "IPFS"
 }
 
@@ -26,11 +25,12 @@ export enum ActionType {
   LIKE = "LIKE",
   COMMENT = "COMMENT",
   CLICK = "CLICK",
-  COLLECT = "COLLECT",
   UNLOCK = "UNLOCK",
   RECEIVE = "RECEIVE"
 }
 
-export const TEMP = "temp";
-
-export const fsVersion = "0.11";
+export enum StorageProviderName {
+  Dataverse,
+  Web3Storage,
+  Lighthouse
+}
