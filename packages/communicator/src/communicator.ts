@@ -20,7 +20,8 @@ export class Communicator {
   protected sourceOrigin: Window;
   protected methodClass: any;
   public methodHandler?: (
-    args: RequestArguments & RequestInputs
+    args: RequestArguments & RequestInputs,
+    event: MessageEvent
   ) => Promise<void> | void;
   protected postMessageTo: RunningEnv;
   protected allowOrigins = "*";
@@ -44,7 +45,8 @@ export class Communicator {
     runningEnv?: RunningEnv;
     methodClass?: any;
     methodHandler?: (
-      args: RequestArguments & RequestInputs
+      args: RequestArguments & RequestInputs,
+      event: MessageEvent
     ) => Promise<void> | void;
   }) {
     this.targetOrigin = target;
@@ -153,7 +155,7 @@ export class Communicator {
           isMethodClassHasMethod = true;
           try {
             const res = this.methodHandler
-              ? await this.methodHandler(args)
+              ? await this.methodHandler(args, event)
               : await this.methodClass[args.method](args.params);
             result = { code: CORRECT_CODE, result: res };
           } catch (error: any) {
