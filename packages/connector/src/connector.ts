@@ -148,7 +148,7 @@ export class Connector {
   }
 
   getLatestStream(model: Model) {
-    return model.streams.find((stream) => stream.latest);
+    return this.dappTableClient.getLatestStream(model);
   }
 
   getModelIdByAppIdAndModelName({
@@ -158,10 +158,6 @@ export class Connector {
     dapp: Dapp;
     modelName: string;
   }): string | undefined {
-    const model = dapp.models.find((model) => model.modelName === modelName);
-    if (model) {
-      return this.getLatestStream(model).modelId;
-    }
-    return undefined;
+    return this.dappTableClient.getModelIdByAppIdAndModelName({ dapp, modelName });
   }
 }
