@@ -1,5 +1,5 @@
-import { getDapp, getDapps } from "@meteor-web3/dapp-table-client";
-import { Dapp } from "@meteor-web3/dapp-table-client/dist/esm/__generated__/types";
+import { DappTableClient } from "@meteor-web3/dapp-table";
+import { Dapp } from "@meteor-web3/dapp-table/dist/esm/__generated__/types";
 import { IPFS, baseURL } from "@meteor-web3/utils";
 import axios from "axios";
 
@@ -16,9 +16,11 @@ import { BaseProvider } from "./provider/base";
 import { Model } from "./types/app/types";
 
 export class Connector {
+  protected dappTableClient?: DappTableClient;
   protected provider?: BaseProvider;
 
   constructor(provider?: BaseProvider) {
+    this.dappTableClient = new DappTableClient();
     this.provider = provider;
   }
 
@@ -130,7 +132,7 @@ export class Connector {
   }
 
   getDAppTable() {
-    return getDapps();
+    return this.dappTableClient.getDapps();
   }
 
   getDAppInfo({
@@ -142,7 +144,7 @@ export class Connector {
     modelId?: string;
     hostname?: string;
   }) {
-    return getDapp({ dappId, modelId, hostname });
+    return this.dappTableClient.getDapp({ dappId, modelId, hostname });
   }
 
   getLatestStream(model: Model) {
