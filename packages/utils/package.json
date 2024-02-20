@@ -1,6 +1,6 @@
 {
   "name": "@meteor-web3/utils",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "types": "dist/esm/index.d.ts",
   "main": "dist/cjs/index.js",
@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@lighthouse-web3/sdk": "^0.3.0",
+    "axios": "^1.6.7",
     "ethers": "^5.7.2",
     "graphql": "16.6.0",
     "graphql-request": "^6.1.0",

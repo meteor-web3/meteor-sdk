@@ -157,6 +157,9 @@ export class Connector {
     dapp: Dapp;
     modelName: string;
   }): string | undefined {
-    return this.dappTableClient.getModelIdByAppIdAndModelName({ dapp, modelName });
+    return this.dappTableClient.getModelIdByAppIdAndModelName({
+      dapp,
+      modelName
+    });
   }
 }
