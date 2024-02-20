@@ -1,5 +1,4 @@
-import { DappTableClient } from "@meteor-web3/dapp-table";
-import { Dapp } from "@meteor-web3/dapp-table/dist/esm/__generated__/types";
+import { DappTableClient, Dapp } from "@dataverse/dapp-table";
 import { IPFS, baseURL } from "@meteor-web3/utils";
 import axios from "axios";
 

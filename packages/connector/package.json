@@ -26,7 +26,7 @@
     "@ethersproject/providers": "^5.7.0",
     "@lit-protocol/crypto": "2.1.161",
     "@meteor-web3/communicator": "^1.0.4",
-    "@meteor-web3/dapp-table": "^1.0.2",
+    "@dataverse/dapp-table": "^1.0.1",
     "@meteor-web3/meteor-iframe": "^0.0.13",
     "@meteor-web3/utils": "^1.0.2",
     "axios": "^1.6.7",
