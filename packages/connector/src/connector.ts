@@ -56,13 +56,13 @@ export class Connector {
    */
   setProvider(provider: BaseProvider) {
     if (this.provider !== provider) {
-      this.provider?.destroy();
+      this.provider?.destroy?.();
       this.provider = provider;
     }
   }
 
   destroy() {
-    this.provider?.destroy();
+    this.provider?.destroy?.();
   }
 
   async connectWallet(params?: {
