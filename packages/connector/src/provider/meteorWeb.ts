@@ -9,7 +9,6 @@ import {
 import { BaseProvider } from "./base";
 import { Communicator } from "@meteor-web3/communicator";
 import { ethers } from "ethers";
-import "@meteor-web3/meteor-iframe";
 
 declare global {
   interface Window {
@@ -24,6 +23,7 @@ export class MeteorWebProvider extends BaseProvider {
 
   constructor(ethereumProvider?: ethers.providers.ExternalProvider) {
     super();
+    import("@meteor-web3/meteor-iframe");
     this.ethereumProvider = ethereumProvider;
     this.init();
   }
