@@ -23,7 +23,6 @@ export class MeteorWebProvider extends BaseProvider {
 
   constructor(ethereumProvider?: ethers.providers.ExternalProvider) {
     super();
-    import("@meteor-web3/meteor-iframe");
     this.ethereumProvider = ethereumProvider;
     this.init();
   }
@@ -41,7 +40,11 @@ export class MeteorWebProvider extends BaseProvider {
       return;
     }
     this.onInitializing = true;
+    // import meteor-iframe
+    // console.log("importing iframe...");
+    import("@meteor-web3/meteor-iframe");
     // await document load
+    // console.log("awaiting document load...");
     await new Promise<void>((resolve) => {
       if (document.readyState === "complete") {
         resolve();
@@ -52,14 +55,28 @@ export class MeteorWebProvider extends BaseProvider {
         );
       }
     });
-    // document loaded
-    const iframe = document.getElementById(
-      "meteor-iframe"
-    ) as HTMLIFrameElement;
-    if (!iframe) {
-      throw "Meteor Web wallet failed to load.";
-    }
+    // await iframe imported
+    // console.log("awaiting iframe import...");
+    const iframe = await new Promise<HTMLIFrameElement>((resolve) => {
+      let iframe = document.getElementById(
+        "meteor-iframe"
+      ) as HTMLIFrameElement;
+      if (iframe) {
+        resolve(iframe);
+      } else {
+        const timer = setInterval(() => {
+          iframe = document.getElementById(
+            "meteor-iframe"
+          ) as HTMLIFrameElement;
+          if (iframe) {
+            clearTimeout(timer);
+            resolve(iframe);
+          }
+        }, 100);
+      }
+    });
     // await iframe load
+    // console.log("awaiting iframe load...");
     await new Promise<void>((resolve) => {
       if ((window as any).__METEOR_IFRAME_READY__) {
         resolve();
@@ -88,6 +105,7 @@ export class MeteorWebProvider extends BaseProvider {
     this.ethereumProvider &&
       (await this.setExternalProvider(this.ethereumProvider));
     this.onInitializing = false;
+    // console.log("Meteor Web wallet initialized.");
   }
 
   async setExternalProvider(
