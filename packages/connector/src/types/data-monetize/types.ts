@@ -71,7 +71,7 @@ export interface Dependency {
 
 export type Attached = {
   timestamp?: number;
-} & object;
+} & Record<string, any>;
 
 export type Dependencies = Dependency[];
 
