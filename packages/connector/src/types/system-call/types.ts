@@ -50,7 +50,7 @@ export interface RequestType {
     syncImmediately?: boolean;
   };
   loadFolderTrees: void;
-  loadFoldersBy: { folderIds?: string[]; signal?: Signal };
+  loadFoldersBy: { folderIds?: string[]; signals?: Signal[] };
   deleteFolder: {
     folderId: string;
     syncImmediately?: boolean;

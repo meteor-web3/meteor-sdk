@@ -68,7 +68,7 @@ export type StructuredFolderRecordWithEncryptedFileKeys = Record<
 
 export interface FolderOptions {
   folderDescription?: string;
-  signal?: Signal;
+  signals?: Signal[];
 }
 
 export type Signal = { type: SignalType; id: string };
