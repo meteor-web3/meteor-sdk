@@ -17,10 +17,12 @@ import { Model } from "./types/app/types";
 export class Connector {
   protected dappTableClient?: DappTableClient;
   protected provider?: BaseProvider;
+  protected lazyInitProvider?: boolean;
 
-  constructor(provider?: BaseProvider) {
+  constructor(provider?: BaseProvider, lazyInitProvider?: boolean) {
     this.dappTableClient = new DappTableClient();
     this.provider = provider;
+    this.lazyInitProvider = lazyInitProvider;
   }
 
   get isConnected() {
@@ -65,6 +67,27 @@ export class Connector {
     this.provider?.destroy?.();
   }
 
+  protected async checkProvider() {
+    if (!this.provider) {
+      if (!this.lazyInitProvider) {
+        throw "Base Provider is not set. Please set the provider before calling this method.";
+      }
+      await new Promise<void>((resolve) => {
+        let timer;
+        if (this.provider) {
+          resolve();
+        } else {
+          timer = setInterval(() => {
+            if (this.provider) {
+              clearInterval(timer);
+              resolve();
+            }
+          }, 100);
+        }
+      });
+    }
+  }
+
   async connectWallet(params?: {
     wallet?: WALLET | undefined;
     preferredAuthType?: AuthType;
@@ -75,10 +98,8 @@ export class Connector {
     wallet: WALLET;
     userInfo?: any;
   }> {
-    if (!this.provider) {
-      throw "Base Provider is not set. Please set the provider before calling this method.";
-    }
-    return this.provider.connectWallet(params);
+    await this.checkProvider();
+    return this.provider!.connectWallet(params);
   }
 
   async getCurrentWallet(): Promise<
@@ -89,16 +110,12 @@ export class Connector {
       }
     | undefined
   > {
-    if (!this.provider) {
-      throw "Base Provider is not set. Please set the provider before calling this method.";
-    }
+    await this.checkProvider();
     return this.provider.getCurrentWallet();
   }
 
-  getCurrentPkh(): string {
-    if (!this.provider) {
-      throw "Base Provider is not set. Please set the provider before calling this method.";
-    }
+  async getCurrentPkh(): Promise<string> {
+    await this.checkProvider();
     return this.provider.getCurrentPkh();
   }
 
@@ -109,9 +126,7 @@ export class Connector {
     method: T;
     params?: RequestType[T];
   }): Promise<Awaited<ReturnType[T]>> {
-    if (!this.provider) {
-      throw "Base Provider is not set. Please set the provider before calling this method.";
-    }
+    await this.checkProvider();
     return this.provider.runOS({ method, params });
   }
 
