@@ -204,7 +204,7 @@ export class MeteorWalletProvider extends BaseProvider {
 
   destroy(): void {
     if (this.destroyed) return;
-    this.meteorProvider.destroy();
+    this.meteorProvider?.destroy();
     window.externalWallet = undefined;
     this.destroyed = true;
   }
