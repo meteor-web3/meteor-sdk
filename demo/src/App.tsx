@@ -496,7 +496,7 @@ function App() {
   };
 
   const getCurrentPkh = async () => {
-    const res = connector.getCurrentPkh();
+    const res = await connector.getCurrentPkh();
     console.log(res);
     _setCurrentPkh(res);
   };

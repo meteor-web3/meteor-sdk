@@ -17,7 +17,7 @@ The system calls exposed by Dataverse Kernel.
 ## Installation
 
 ```bash
-pnpm install @meteor-web3/meteor-sdk
+pnpm install @meteor-web3/connector
 ```
 
 ## Run demo
