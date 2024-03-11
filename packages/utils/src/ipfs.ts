@@ -9,13 +9,13 @@ export class IPFS {
     siweMessage
   }: {
     file: File;
-    jws: object;
+    jws: any;
     siweMessage: object;
   }): Promise<string> {
     const requestPath = "/v0/upload";
     const res = await axios.put(`${baseURL}${requestPath}`, file, {
       headers: {
-        Authorization: `Bearer ${jws}`,
+        Authorization: `Bearer ${jws.signatures[0].protected}.${jws.payload}.${jws.signatures[0].signature}`,
         "x-dataverse-siwe": btoa(JSON.stringify(siweMessage))
       }
     });
