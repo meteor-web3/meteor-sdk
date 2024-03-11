@@ -36,6 +36,7 @@ export enum SYSTEM_CALL {
 
   monetizeFile = "monetizeFile",
   monetizeFolder = "monetizeFolder",
+  unlockFolder = "unlockFolder",
   unlockFile = "unlockFile",
   isFileUnlocked = "isFileUnlocked"
 }

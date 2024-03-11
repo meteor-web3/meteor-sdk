@@ -129,7 +129,9 @@ export interface RequestType {
   monetizeFolder: {
     folderId: string;
     monetizationProvider: MonetizationProvider;
+    encryptionProvider?: EncryptionProvider;
   };
+  unlockFolder: string;
   unlockFile: string;
   isFileUnlocked: string;
 }
@@ -255,6 +257,7 @@ export interface ReturnType {
     newDataUnion: StructuredFolder;
     allDataUnions: StructuredFolderRecord;
   }>;
+  unlockFolder: Promise<StructuredFolder>;
   unlockFile: Promise<{
     fileContent: {
       file: Omit<MirrorFile, "content" | "external">;
