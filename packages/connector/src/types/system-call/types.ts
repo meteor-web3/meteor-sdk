@@ -253,10 +253,7 @@ export interface ReturnType {
       content?: FileContent;
     };
   }>;
-  monetizeFolder: Promise<{
-    newDataUnion: StructuredFolder;
-    allDataUnions: StructuredFolderRecord;
-  }>;
+  monetizeFolder: Promise<StructuredFolder>;
   unlockFolder: Promise<StructuredFolder>;
   unlockFile: Promise<{
     fileContent: {
