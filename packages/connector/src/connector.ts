@@ -130,6 +130,21 @@ export class Connector {
     return this.provider.runOS({ method, params });
   }
 
+  async uploadFile(file: File) {
+    const ipfs = new IPFS();
+    const requestPath = "/v0/upload";
+    const codeRes = await axios.post(`${baseURL}/v0/code`);
+    const sigObj = await this.runOS({
+      method: SYSTEM_CALL.signWithSessionKey,
+      params: {
+        code: codeRes.data.code,
+        requestPath
+      }
+    });
+    const res = await ipfs.uploadFile({ file, ...sigObj });
+    return res;
+  }
+
   async getUserStorageSpaceSize() {
     const ipfs = new IPFS();
     const requestPath = "/v0/block_sum";
