@@ -96,6 +96,7 @@ export abstract class BaseProvider implements IProvider {
       method !== SYSTEM_CALL.checkCapability &&
       method !== SYSTEM_CALL.loadFile &&
       method !== SYSTEM_CALL.loadFilesBy &&
+      method !== SYSTEM_CALL.loadFoldersBy &&
       (method !== SYSTEM_CALL.loadFilesBy ||
         (method === SYSTEM_CALL.loadFilesBy &&
           (params as RequestType[SYSTEM_CALL.loadFilesBy]).fileIds)) &&

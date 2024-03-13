@@ -629,6 +629,12 @@ function App() {
     console.log(res);
   };
 
+  const uploadFile = async (event: any) => {
+    const file = event.target.files[0];
+    const res = await connector.uploadFile(file);
+    console.log(res);
+  };
+
   const getUserStorageSpaceSize = async () => {
     const res = await connector.getUserStorageSpaceSize();
     console.log(res);
@@ -1077,6 +1083,15 @@ function App() {
       <button onClick={getAppSessionKey}>getAppSessionKey</button>
       <button onClick={getAppCacao}>getAppCacao</button>
       <button onClick={signWithSessionKey}>signWithSessionKey</button>
+      <button>
+        <span>uploadFile</span>
+        <input
+          type='file'
+          onChange={uploadFile}
+          name='uploadFile'
+          style={{ width: "168px", marginLeft: "10px" }}
+        />
+      </button>
       <button onClick={getUserStorageSpaceSize}>getUserStorageSpaceSize</button>
       <br />
       <button onClick={generateFileKey}>generateFileKey</button>
