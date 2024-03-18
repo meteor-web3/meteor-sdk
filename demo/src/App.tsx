@@ -9,16 +9,17 @@ import {
   ActionType,
   // StorageResource,
   WalletProvider,
-  MeteorWalletProvider
+  MeteorWalletProvider,
+  MeteorWebProvider
 } from "@meteor-web3/connector";
 import { Contract, ethers } from "ethers";
 import { assert } from "chai";
 import { Modal } from "antd";
 import "./App.scss";
 
-const connector = new Connector(new MeteorWalletProvider());
+let connector: Connector;
 
-export const appId = "9aaae63f-3445-47d5-8785-c23dd16e4965";
+const appId = "9aaae63f-3445-47d5-8785-c23dd16e4965";
 
 const postModelId =
   "kjzl6hvfrbw6c8h0oiiv2ccikb2thxsu98sy0ydi6oshj6sjuz9dga94463anvf";
@@ -98,7 +99,7 @@ function App() {
 
   const init = async () => {
     console.log("connecting meteor wallet...");
-    const connectResult = await connectWalletWithMetamaskProvider();
+    const connectResult = await connectWalletWithMetaMaskProvider();
     assert.isDefined(connectResult, "connect wallet failed");
     console.log("creating capability...");
     const pkh = await createCapability();
@@ -255,6 +256,7 @@ function App() {
 
   /*** Wallet ***/
   const connectWalletWithMeteorWalletSDK = async (_wallet = wallet) => {
+    connector = new Connector(new MeteorWalletProvider());
     const provider = new WalletProvider();
     console.log(provider);
     const res = await connector.connectWallet({
@@ -286,7 +288,8 @@ function App() {
     return res;
   };
 
-  const connectWalletWithMetamaskProvider = async (_wallet = wallet) => {
+  const connectWalletWithMetaMaskProvider = async (_wallet = wallet) => {
+    connector = new Connector(new MeteorWebProvider());
     const provider = (window as any).ethereum;
     console.log(provider);
     const res = await connector.connectWallet({
@@ -315,7 +318,7 @@ function App() {
       if (res.wallet !== WALLET.EXTERNAL_WALLET) {
         await connectWalletWithMeteorWalletSDK(res.wallet);
       } else {
-        await connectWalletWithMetamaskProvider(res.wallet);
+        await connectWalletWithMetaMaskProvider(res.wallet);
       }
     } else {
       console.log(res);
@@ -579,7 +582,7 @@ function App() {
 
   /*** Capability ***/
   const createCapability = async () => {
-    await connectWalletWithMetamaskProvider();
+    await connectWalletWithMetaMaskProvider();
     const res = await connector.runOS({
       method: SYSTEM_CALL.createCapability,
       params: {
@@ -1032,8 +1035,8 @@ function App() {
       <button onClick={() => connectWalletWithMeteorWalletSDK()}>
         connectWalletWithMeteorWalletSDK
       </button>
-      <button onClick={() => connectWalletWithMetamaskProvider()}>
-        connectWalletWithMetamaskProvider
+      <button onClick={() => connectWalletWithMetaMaskProvider()}>
+        connectWalletWithMetaMaskProvider
       </button>
       <div className='blackText'>{_address}</div>
       <hr />

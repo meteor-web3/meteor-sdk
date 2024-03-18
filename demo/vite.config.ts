@@ -13,7 +13,7 @@ export default defineConfig({
   plugins: [
     react(),
     // provider .env to process.env (only AVAILABLE in DEV mode)
-    EnvironmentPlugin(Object.keys(result.parsed)),
+    EnvironmentPlugin(Object.keys(result.parsed))
   ],
   resolve: {
     dedupe: ["react", "react-dom"],
@@ -29,12 +29,12 @@ export default defineConfig({
         // Enable rollup polyfills plugin
         // used during production bundling
         RollupPluginPolyfillNode({
-          include: null,
+          include: null
         }),
         // provider .env to process.env (only AVAILABLE in PROD mode)
-        RollupPluginDotenv(),
-      ],
-    },
+        RollupPluginDotenv()
+      ]
+    }
   },
   optimizeDeps: {
     esbuildOptions: {
@@ -42,10 +42,10 @@ export default defineConfig({
       plugins: [
         NodeGlobalsPolyfillPlugin({
           process: true,
-          buffer: true,
-        }),
-      ] as any[],
-    },
+          buffer: true
+        })
+      ] as any[]
+    }
   },
   server: {
     port: 5173,
@@ -53,5 +53,5 @@ export default defineConfig({
     fs: {
       strict: false
     }
-  },
+  }
 });
