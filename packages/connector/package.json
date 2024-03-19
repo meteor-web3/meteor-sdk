@@ -1,6 +1,6 @@
 {
   "name": "@meteor-web3/connector",
-  "version": "1.0.33",
+  "version": "1.0.34",
   "description": "",
   "types": "dist/esm/index.d.ts",
   "main": "dist/cjs/index.js",
@@ -20,14 +20,16 @@
     "build": "pnpm build:esm && pnpm build:cjs",
     "doc": "pnpm typedoc src/index.ts --out ../../docs/connector"
   },
+  "peerDependencies": {
+    "@meteor-web3/communicator": "^1.0.4",
+    "@meteor-web3/meteor-iframe": "^1.0.4"
+  },
   "dependencies": {
     "@dataverse/dapp-table": "^1.0.0",
     "@ethersproject/abstract-provider": "^5.7.0",
     "@ethersproject/abstract-signer": "^5.7.0",
     "@ethersproject/providers": "^5.7.0",
     "@lit-protocol/crypto": "2.1.161",
-    "@meteor-web3/communicator": "^1.0.4",
-    "@meteor-web3/meteor-iframe": "^1.0.0",
     "@meteor-web3/utils": "^1.0.5",
     "axios": "^1.6.7",
     "bufferutil": "^4.0.7",
