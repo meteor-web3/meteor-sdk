@@ -1,6 +1,6 @@
 {
   "name": "@meteor-web3/connector",
-  "version": "1.0.34",
+  "version": "1.0.35",
   "description": "",
   "types": "dist/esm/index.d.ts",
   "main": "dist/cjs/index.js",
@@ -22,7 +22,7 @@
   },
   "peerDependencies": {
     "@meteor-web3/communicator": "^1.0.4",
-    "@meteor-web3/meteor-iframe": "^1.0.4"
+    "@meteor-web3/meteor-iframe": "^1.0.7"
   },
   "dependencies": {
     "@dataverse/dapp-table": "^1.0.0",
