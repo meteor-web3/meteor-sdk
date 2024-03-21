@@ -99,7 +99,7 @@ function App() {
 
   const init = async () => {
     console.log("connecting meteor wallet...");
-    const connectResult = await connectWalletWithMetaMaskProvider();
+    const connectResult = await connectWalletWithMeteorWeb();
     assert.isDefined(connectResult, "connect wallet failed");
     console.log("creating capability...");
     const pkh = await createCapability();
@@ -255,7 +255,32 @@ function App() {
   };
 
   /*** Wallet ***/
-  const connectWalletWithMeteorWalletSDK = async (_wallet = wallet) => {
+
+  const connectWalletWithMeteorWeb = async (_wallet = wallet) => {
+    connector = new Connector(new MeteorWebProvider());
+    const provider = (window as any).ethereum;
+    console.log(provider);
+    const res = await connector.connectWallet({
+      wallet: _wallet,
+      provider
+    });
+    console.log(res);
+    setProvider(provider);
+    wallet = WALLET.EXTERNAL_WALLET;
+    address = res.address;
+    _setAddress(address);
+    provider.on("chainChanged", (networkId: string) => {
+      console.log(Number(networkId));
+    });
+    provider.on("accountsChanged", (accounts: Array<string>) => {
+      console.log(accounts);
+      address = ethers.utils.getAddress(accounts[0]);
+      _setAddress(address);
+    });
+    return res;
+  };
+
+  const connectWalletWithMeteorWallet = async (_wallet = wallet) => {
     connector = new Connector(new MeteorWalletProvider());
     const provider = new WalletProvider();
     console.log(provider);
@@ -288,37 +313,13 @@ function App() {
     return res;
   };
 
-  const connectWalletWithMetaMaskProvider = async (_wallet = wallet) => {
-    connector = new Connector(new MeteorWebProvider());
-    const provider = (window as any).ethereum;
-    console.log(provider);
-    const res = await connector.connectWallet({
-      wallet: _wallet,
-      provider
-    });
-    console.log(res);
-    setProvider(provider);
-    wallet = WALLET.EXTERNAL_WALLET;
-    address = res.address;
-    _setAddress(address);
-    provider.on("chainChanged", (networkId: string) => {
-      console.log(Number(networkId));
-    });
-    provider.on("accountsChanged", (accounts: Array<string>) => {
-      console.log(accounts);
-      address = ethers.utils.getAddress(accounts[0]);
-      _setAddress(address);
-    });
-    return res;
-  };
-
   const getCurrentWallet = async () => {
     const res = await connector.getCurrentWallet();
     if (res) {
       if (res.wallet !== WALLET.EXTERNAL_WALLET) {
-        await connectWalletWithMeteorWalletSDK(res.wallet);
+        await connectWalletWithMeteorWallet(res.wallet);
       } else {
-        await connectWalletWithMetaMaskProvider(res.wallet);
+        await connectWalletWithMeteorWeb(res.wallet);
       }
     } else {
       console.log(res);
@@ -583,7 +584,7 @@ function App() {
   /*** Capability ***/
   const createCapability = async () => {
     if (!provider?.isConnected) {
-      await connectWalletWithMetaMaskProvider();
+      await connectWalletWithMeteorWeb();
     }
     const res = await connector.runOS({
       method: SYSTEM_CALL.createCapability,
@@ -1034,11 +1035,11 @@ function App() {
           run union tests
         </button> */}
       </div>
-      <button onClick={() => connectWalletWithMeteorWalletSDK()}>
-        connectWalletWithMeteorWalletSDK
+      <button onClick={() => connectWalletWithMeteorWeb()}>
+        connectWalletWithMeteorWeb
       </button>
-      <button onClick={() => connectWalletWithMetaMaskProvider()}>
-        connectWalletWithMetaMaskProvider
+      <button onClick={() => connectWalletWithMeteorWallet()}>
+        connectWalletWithMeteorWallet
       </button>
       <div className='blackText'>{_address}</div>
       <hr />
