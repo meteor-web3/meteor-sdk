@@ -565,7 +565,10 @@ function App() {
 
   const getValidAppCaps = async () => {
     const appsInfo = await connector.runOS({
-      method: SYSTEM_CALL.getValidAppCaps
+      method: SYSTEM_CALL.getValidAppCaps,
+      params: {
+        appIds: [appId]
+      }
     });
     console.log(appsInfo);
     return appsInfo;

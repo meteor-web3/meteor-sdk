@@ -18,7 +18,7 @@ export interface RequestType {
   getPKP: void;
   executeLitAction: { code: string; jsParams: object };
 
-  getValidAppCaps: void;
+  getValidAppCaps: { appIds: string[]; pkh?: string | undefined };
   getModelBaseInfo: string;
 
   createCapability: {
